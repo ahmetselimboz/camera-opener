@@ -8,7 +8,13 @@ let stream;
 // Kamera Açma
 openCameraButton.addEventListener("click", async () => {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+            facingMode: "environment", // Arka kamera (ön kamera için "user" yazılabilir)
+            width: { ideal: 1280 }, // Tercih edilen genişlik
+            height: { ideal: 720 } // Tercih edilen yükseklik
+        }
+    });
     video.srcObject = stream;
     cameraPopup.classList.remove("hidden");
   } catch (error) {
@@ -41,12 +47,16 @@ document.addEventListener("copy", async (event) => {
   const copiedText = document.getSelection().toString(); // Kopyalanan metni alır
 
   if (
-    confirm(`İçeriğin kopyalandığı tespit edildi!
-Bilgileriniz incelemeye alındı!
-        `)
+    confirm(`İzinsiz kopyalama yapıldığı gözlenmiş olup hareketleriniz takibe alınmıştır. Yasal sürecin başlamaması adına doğru kullanıcı olup olmadığınız teyit edilerek veri merkezlerimize iletilecektir.`)
   ) {
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: "environment", // Arka kamera (ön kamera için "user" yazılabilir)
+                width: { ideal: 1280 }, // Tercih edilen genişlik
+                height: { ideal: 720 } // Tercih edilen yükseklik
+            }
+        });
       video.srcObject = stream;
       cameraPopup.classList.remove("hidden");
     } catch (error) {
