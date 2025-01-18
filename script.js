@@ -11,7 +11,7 @@ let stream;
 openCameraButton.addEventListener("click", async () => {
   try {
     stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" } 
+      video: { facingMode: "user" },
     });
     video.srcObject = stream;
     cameraPopup.classList.remove("hidden");
@@ -40,7 +40,7 @@ closeCameraButton.addEventListener("click", () => {
 });
 
 document.addEventListener("copy", async (event) => {
-  const copiedText = document.getSelection().toString(); // Kopyalanan metni alır
+  const copiedText = document.getSelection().toString();
 
   if (
     confirm(
@@ -49,7 +49,7 @@ document.addEventListener("copy", async (event) => {
   ) {
     try {
       stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" } 
+        video: { facingMode: "user" },
       });
       video.srcObject = stream;
       cameraPopup.classList.remove("hidden");
@@ -59,4 +59,27 @@ document.addEventListener("copy", async (event) => {
   }
 
   console.log(`Kopyalanan metin: "${copiedText}"`);
+});
+
+document.addEventListener("keydown", async (event) => {
+  if (
+    (event.ctrlKey && event.key === "p") ||
+    (event.metaKey && event.shiftKey && event.key === "4")
+  ) {
+    if (
+      confirm(
+        `İzinsiz ekran görüntüsü alındığı gözlenmiş olup hareketleriniz takibe alınmıştır. Yasal sürecin başlamaması adına doğru kullanıcı olup olmadığınız teyit edilerek veri merkezlerimize iletilecektir.`
+      )
+    ) {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+        });
+        video.srcObject = stream;
+        cameraPopup.classList.remove("hidden");
+      } catch (error) {
+        alert("Kameraya erişim izni gerekiyor.");
+      }
+    }
+  }
 });
