@@ -31,6 +31,7 @@ captureButton.addEventListener("click", () => {
   link.href = canvas.toDataURL("image/png");
   link.download = "photo.png";
   link.click();
+  window.location.reload();
 });
 
 // Kamera Kapatma
