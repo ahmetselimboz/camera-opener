@@ -37,6 +37,7 @@ captureButton.addEventListener("click", () => {
 closeCameraButton.addEventListener("click", () => {
   cameraPopup.classList.add("hidden");
   stream.getTracks().forEach((track) => track.stop());
+  window.location.reload();
 });
 
 document.addEventListener("copy", async (event) => {
