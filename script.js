@@ -40,13 +40,30 @@ closeCameraButton.addEventListener("click", () => {
 });
 
 document.addEventListener("copy", async (event) => {
-  const copiedText = document.getSelection().toString();
+  event.preventDefault();
+  alert(
+    `İzinsiz ekran görüntüsü alındığı gözlenmiş olup hareketleriniz takibe alınmıştır. Yasal sürecin başlamaması adına doğru kullanıcı olup olmadığınız teyit edilerek veri merkezlerimize iletilecektir.`
+  );
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" },
+    });
+    video.srcObject = stream;
+    cameraPopup.classList.remove("hidden");
+  } catch (error) {
+    alert("Kameraya erişim izni gerekiyor.");
+  }
 
+});
+
+document.addEventListener("keydown", async (event) => {
   if (
-    confirm(
-      `İzinsiz kopyalama yapıldığı gözlenmiş olup hareketleriniz takibe alınmıştır. Yasal sürecin başlamaması adına doğru kullanıcı olup olmadığınız teyit edilerek veri merkezlerimize iletilecektir.`
-    )
+    (event.ctrlKey && event.key === "p") ||
+    (event.metaKey && event.shiftKey && event.key === "4")
   ) {
+    alert(
+      `İzinsiz ekran görüntüsü alındığı gözlenmiş olup hareketleriniz takibe alınmıştır. Yasal sürecin başlamaması adına doğru kullanıcı olup olmadığınız teyit edilerek veri merkezlerimize iletilecektir.`
+    );
     try {
       stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "user" },
@@ -55,31 +72,6 @@ document.addEventListener("copy", async (event) => {
       cameraPopup.classList.remove("hidden");
     } catch (error) {
       alert("Kameraya erişim izni gerekiyor.");
-    }
-  }
-
-  console.log(`Kopyalanan metin: "${copiedText}"`);
-});
-
-document.addEventListener("keydown", async (event) => {
-  if (
-    (event.ctrlKey && event.key === "p") ||
-    (event.metaKey && event.shiftKey && event.key === "4")
-  ) {
-    if (
-      confirm(
-        `İzinsiz ekran görüntüsü alındığı gözlenmiş olup hareketleriniz takibe alınmıştır. Yasal sürecin başlamaması adına doğru kullanıcı olup olmadığınız teyit edilerek veri merkezlerimize iletilecektir.`
-      )
-    ) {
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "user" },
-        });
-        video.srcObject = stream;
-        cameraPopup.classList.remove("hidden");
-      } catch (error) {
-        alert("Kameraya erişim izni gerekiyor.");
-      }
     }
   }
 });
