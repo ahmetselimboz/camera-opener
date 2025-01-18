@@ -11,7 +11,7 @@ let stream;
 openCameraButton.addEventListener("click", async () => {
   try {
     stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "environment" },
+        video: { facingMode: "user" } 
     });
     video.srcObject = stream;
     cameraPopup.classList.remove("hidden");
@@ -49,7 +49,7 @@ document.addEventListener("copy", async (event) => {
   ) {
     try {
       stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" },
+        video: { facingMode: "user" } 
       });
       video.srcObject = stream;
       cameraPopup.classList.remove("hidden");
