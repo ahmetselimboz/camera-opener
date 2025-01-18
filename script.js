@@ -5,20 +5,22 @@ const video = document.getElementById("camera");
 const captureButton = document.getElementById("capture");
 const canvas = document.getElementById("photoCanvas");
 const context = canvas.getContext("2d");
+const popup = document.getElementById("popup");
+const closePopup = document.getElementById("closePopup");
 let stream;
 
 // Kamera Açma
-openCameraButton.addEventListener("click", async () => {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "user" },
-    });
-    video.srcObject = stream;
-    cameraPopup.classList.remove("hidden");
-  } catch (error) {
-    alert("Kameraya erişim izni gerekiyor.");
-  }
-});
+// openCameraButton.addEventListener("click", async () => {
+//   try {
+//     stream = await navigator.mediaDevices.getUserMedia({
+//       video: { facingMode: "user" },
+//     });
+//     video.srcObject = stream;
+//     cameraPopup.classList.remove("hidden");
+//   } catch (error) {
+//     alert("Kameraya erişim izni gerekiyor.");
+//   }
+// });
 
 // Fotoğraf Çekme
 captureButton.addEventListener("click", () => {
@@ -43,9 +45,14 @@ captureButton.addEventListener("click", () => {
 
 document.addEventListener("copy", async (event) => {
   event.preventDefault();
-  alert(
-    `İzinsiz ekran görüntüsü alındığı gözlenmiş olup hareketleriniz takibe alınmıştır. Yasal sürecin başlamaması adına doğru kullanıcı olup olmadığınız teyit edilerek veri merkezlerimize iletilecektir.`
-  );
+
+  const copiedText = "Bu metin kopyalanamaz!";
+  event.clipboardData.setData("text/plain", copiedText);
+  popup.classList.remove("hidden");
+});
+
+closePopup.addEventListener("click", async () => {
+  popup.classList.add("hidden");
   try {
     stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "user" },
@@ -55,7 +62,6 @@ document.addEventListener("copy", async (event) => {
   } catch (error) {
     alert("Kameraya erişim izni gerekiyor.");
   }
-
 });
 
 document.addEventListener("keydown", async (event) => {
