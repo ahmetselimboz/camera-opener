@@ -51,7 +51,7 @@
             <button id="closePopup" class="popup-button">Tamam</button>
         </div>
     </div>
-    
+
     <style>
         .popup-overlay {
             position: fixed;
@@ -63,9 +63,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-         
+
         }
-        
+
         .popup-content {
             background: white;
             border-radius: 8px;
@@ -75,19 +75,19 @@
             max-width: 400px;
             text-align: center;
         }
-        
+
         .popup-title {
             font-size: 18px;
             font-weight: bold;
             color: #333;
             margin-bottom: 16px;
         }
-        
+
         .popup-text {
             color: #555;
             margin-bottom: 16px;
         }
-        
+
         .popup-button {
             width: 100%;
             background: #e3342f;
@@ -98,37 +98,57 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        
+
         .popup-button:hover {
             background: #cc1f1a;
         }
 
-        .hidden{
+        .hidden {
             display: none;
         }
 
         @media (max-width: 480px) {
-        .popup-content {
-            padding: 16px;
-            max-width: 90%;
-        }
+            .popup-content {
+                padding: 16px;
+                max-width: 90%;
+            }
 
-        .popup-title {
-            font-size: 1.25rem;
-        }
-        
-        .popup-text {
-            font-size: 0.9rem;
-        }
+            .popup-title {
+                font-size: 1.25rem;
+            }
 
-        .popup-button {
-            font-size: 0.9rem;
-            padding: 10px;
+            .popup-text {
+                font-size: 0.9rem;
+            }
+
+            .popup-button {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
         }
-    }
     </style>
-    
-    <script src="./script.js"></script>
+
+    <script>
+        const popup = document.getElementById("popup");
+        const closePopup = document.getElementById("closePopup");
+
+        document.addEventListener("copy", async (event) => {
+            event.preventDefault();
+            const copiedText = "Bu metin kopyalanamaz!";
+            event.clipboardData.setData("text/plain", copiedText);
+            popup.classList.remove("hidden");
+        });
+
+        closePopup.addEventListener("click", async () => {
+            popup.classList.add("hidden");
+
+        });
+
+        document.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+            popup.classList.remove("hidden");
+        });
+    </script>
 </body>
 
 </html>
